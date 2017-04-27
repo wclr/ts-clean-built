@@ -1,0 +1,22 @@
+{
+  "name": "clean-ts-built",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "clean-ts-built": "./index.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "del": "^2.2.2"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "devDependencies": {
+    "fs-extra": "^3.0.0",
+    "mocha": "^3.3.0"
+  }
+}

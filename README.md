@@ -1,4 +1,4 @@
-# clean-ts-built
+# ts-clean-built
 
 > Safely removes *.js *.d.ts *.js.map files from directory excluding node_modules
 
@@ -11,10 +11,13 @@ yarn add clean-ts-built --dev
 ## Usage
 
 ```
-clean-ts-built [dir]
+ts-clean-built [dir] [--dot] [--all]
 ```
 
-Dot-folders excluded, so use `clean-ts-built .my-dot-folder`
+By default searches `*.ts` files and removes corresponding `*.js *.d.ts *.js.map`, 
+with `--all` flag will remove all found `*.js *.d.ts *.js.map` files.
+
+Dot-folders excluded, use `--dot` flag or `ts-built .my-dot-folder`
 
 ## Licence
 WTF.

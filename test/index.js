@@ -3,19 +3,20 @@ const execSync = require('child_process').execSync
 const { doesNotThrow, throws } = require('assert')
 
 const checkExists = (paths, message) => {
-  paths = Array.isArray(paths) ? paths : [paths]
-  paths.forEach((path) => {
-    doesNotThrow(() => fs.accessSync('test/tmp/' + path), path + ' should exist')
+  ;[].concat(paths).forEach((path) => {
+    doesNotThrow(
+      () => fs.accessSync('test/tmp/' + path),
+      path + ' should exist'
+    )
   })
 }
 
 const checkNotExists = (paths, message) => {
-  paths = Array.isArray(paths) ? paths : [paths]
-  paths.forEach((path) => {
+  ;[].concat(paths).forEach((path) => {
     throws(() => fs.accessSync('test/tmp/' + path), path + ' should not exist')
   })
 }
-//
+
 describe('ts-clean-built', () => {
   beforeEach(() => {
     // console.log = () => {}
@@ -83,7 +84,7 @@ describe('ts-clean-built', () => {
         'old/orphan.d.ts',
       ])
     })
-//
+    //
     it('does touch file without .d.ts in .dot folder', () => {
       checkExists('.dot/a.js')
     })
@@ -102,7 +103,9 @@ describe('ts-clean-built', () => {
     before(() => {
       fs.removeSync('test/tmp')
       fs.copySync('test/fixture', 'test/tmp')
-      execSync('node index.js test/tmp --dot --old --allow-dts', { stdio: 'inherit' })
+      execSync('node index.js test/tmp --dot --old --allow-dts', {
+        stdio: 'inherit',
+      })
     })
 
     it('remove old .d.ts and .js files', () => {
@@ -110,12 +113,11 @@ describe('ts-clean-built', () => {
         // 'a.d.ts',
         // 'nested/a.d.ts',
         'old/a.d.ts',
-        'old/a.js',        
+        'old/a.js',
       ])
       checkExists('a.d.ts')
       checkExists('old/orphan.d.ts')
     })
-
   })
 
   describe('--all - cleaning all *.js, *.d.ts, *.js.map', () => {

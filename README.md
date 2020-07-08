@@ -4,7 +4,7 @@
 
 ## Install
 
-![npm (scoped)](https://img.shields.io/npm/v/ts-clean-built.svg?maxAge=86400) [![Build Status](https://travis-ci.org/whitecolor/ts-clean-built.svg?branch=master)](https://travis-ci.org/whitecolor/ts-clean-built)
+![npm (scoped)](https://img.shields.io/npm/v/ts-clean-built.svg?maxAge=86400) [![Build Status](https://travis-ci.com/whitecolor/ts-clean-built.svg?branch=master)](https://travis-ci.org/whitecolor/ts-clean-built)
 
 ```
 yarn add clean-ts-built --dev
@@ -24,9 +24,7 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 
 - `--all` - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option.
 
-- `--dot` - dot-folders excluded use  flag or `ts-built .my-dot-folder`.
-
-- `--quite` - will not output log messages.
+- `--dot` - dot-folders excluded, to include use  flag.
 
 - `--exclude` - list of patterns to exclude from search, i.e. `--exclude **/my-folder/**` will exclude all files in all directories named `my-folder` in the tree.
 
@@ -35,6 +33,8 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 - `--dry` - will not remove files, just show the list to going to delete.
 
 - `--files` - outputs list of files removed.
+
+- `--quite` - will not output log messages.
 
 - `dir` - is '.' (cwd) by default
 

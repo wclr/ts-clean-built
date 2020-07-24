@@ -5,7 +5,17 @@ const minimist = require('minimist')
 const path = require('path')
 const args = minimist(process.argv.slice(2), {
   string: ['exclude', 'out', 'dir'],
-  boolean: ['help', 'old', 'dry', 'all', 'allow-dts', 'files', 'quite', 'dot'],
+  boolean: [
+    'help',
+    'built',
+    'old',
+    'dry',
+    'all',
+    'allow-dts',
+    'files',
+    'quite',
+    'dot',
+  ],
 })
 
 const dir = path.resolve(args.dir || args._[0] || '.')
@@ -24,12 +34,13 @@ if (help) {
     'Usage example:',
     'ts-clean-built --old --dry --out out',
     'Flags:',
-    '--old - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists.',
-    '--allow-dts - used with `--old`, will not remove `.d.ts` if no corresponding `.ts` or `.js` exists, allowing to have leave `.d.ts` files.',
-    '--all - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option.',
-    '--dot - dot-folders excluded, to include use  flag.',
-    '--exclude - list of patterns to exclude from search, i.e. `--exclude **/my-folder/**` will exclude all files in all directories named `my-folder` in the tree.',
-    '--dry - will not remove files, just show the list to going to delete.',
+    '--built - `.ts` files and removes corresponding `.js, .d.ts, .js.map',
+    '--old - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists',
+    '--allow-dts - used with `--old`, will not remove `.d.ts` if no corresponding `.ts` or `.js` exists, allowing to have leave `.d.ts` files',
+    '--all - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option',
+    '--dot - dot-folders excluded, to include use  flag',
+    '--exclude - list of patterns to exclude from search, i.e. `--exclude **/my-folder/**` will exclude all files in all directories named `my-folder` in the tree',
+    '--dry - will not remove files, just show the list to going to delete',
     '--files - outputs list of files removed',
     '--quite - will not output log messages.',
     '--out - root, where to search output files, equals to `dir` by default',
@@ -96,7 +107,7 @@ const run = async () => {
       )
     log('Removing old', '.js, .d.ts, .js.map')
     return remove(toRemove)
-  } else {
+  } else if (args.built) {
     const tsFiles = await globby(tsPattern, { cwd: dir })
 
     const toRemove = tsFiles
@@ -104,11 +115,21 @@ const run = async () => {
       .concat(excludePatterns)
     log('Removing built versions .js, .d.ts, .js.map')
     return remove(toRemove)
+  } else {
+    console.log(
+      [
+        'Warning: you should provide flag which files to clean.',
+        'This is to prevent unintentional deletion of files.',
+        'Use --help flag to read docs about options.',
+        'Use --dry flag to check desired behaviour.',
+      ].join('\n')
+    )
   }
 }
 
 run()
   .then((removed) => {
+    if (!removed) return
     if (dry || filesList) {
       const list = removed.map((file) =>
         path.relative(dir || '.', file).replace(/\\/g, '/')

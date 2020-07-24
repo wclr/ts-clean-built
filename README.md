@@ -16,7 +16,9 @@ yarn add clean-ts-built --dev
 ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 ```
 
-- By default (without flags) searches `.ts` files and removes corresponding `.js, .d.ts, .js.map`.
+- By default running without flags shows warning.
+
+- `--built` `.ts` files and removes corresponding `.js, .d.ts, .js.map`.
 
 - `--old` - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists.
 
@@ -36,11 +38,17 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 
 - `--quite` - will not output log messages.
 
-- `--out` - root, where to search output files, equals to `dir` by default
+- `--out` - root, where to search output files, equals to `dir` by default.
 
-- `--dir` - root, where to search source (\*.ts) files, is `.` (cwd) by default
+- `--dir` - root, where to search source (\*.ts) files, is `.` (cwd) by default.
 
-- [dir] - last argument, the same as `--dir`
+- `[dir]` - last argument, the same as `--dir`.
+
+- `--help` - shows help info.
+
+## Recipe
+
+Add script `clean: ts-clean-built --old --out out --dir src` to your `package.json` and run it when ever needed.
 
 ## Licence
 

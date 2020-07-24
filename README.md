@@ -2,6 +2,8 @@
 
 > Safely removes old/built `*.js *.d.ts *.js.map` files from working directory.
 
+This is useful when for example you want to clean up working/output directory of old built (not actual) files, not removing actual existing output (i.e when `tsc --watch` is running).
+
 ## Install
 
 ![npm (scoped)](https://img.shields.io/npm/v/ts-clean-built.svg?maxAge=86400) [![Build Status](https://travis-ci.com/whitecolor/ts-clean-built.svg?branch=master)](https://travis-ci.org/whitecolor/ts-clean-built)

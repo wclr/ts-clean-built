@@ -34,7 +34,7 @@ if (help) {
     'Usage example:',
     'ts-clean-built --old --dry --out out',
     'Flags:',
-    '--built - `.ts` files and removes corresponding `.js, .d.ts, .js.map',
+    '--built - for all found `.ts` files removes corresponding `.js, .d.ts, .js.map',
     '--old - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists',
     '--allow-dts - used with `--old`, will not remove `.d.ts` if no corresponding `.ts` or `.js` exists, allowing to have leave `.d.ts` files',
     '--all - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option',

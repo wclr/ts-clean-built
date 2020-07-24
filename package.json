@@ -1,6 +1,6 @@
 {
   "name": "ts-clean-built",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "license": "MIT",
   "description": "Safely removes old/built `*.js *.d.ts *.js.map` files from working directory.",

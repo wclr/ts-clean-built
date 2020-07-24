@@ -24,7 +24,7 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 
 - By default running without flags shows warning.
 
-- `--built` `.ts` files and removes corresponding `.js, .d.ts, .js.map`.
+- `--built` - for all found `.ts` files removes corresponding `.js, .d.ts, .js.map`.
 
 - `--old` - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists.
 

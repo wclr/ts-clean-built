@@ -7,7 +7,11 @@
 ![npm (scoped)](https://img.shields.io/npm/v/ts-clean-built.svg?maxAge=86400) [![Build Status](https://travis-ci.com/whitecolor/ts-clean-built.svg?branch=master)](https://travis-ci.org/whitecolor/ts-clean-built)
 
 ```
-yarn add clean-ts-built --dev
+npm install ts-clean-built -D
+```
+
+```
+yarn add ts-clean-built --dev
 ```
 
 ## Usage

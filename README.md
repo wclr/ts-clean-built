@@ -1,6 +1,6 @@
 # ts-clean-built
 
-> Safely removes built `*.js *.d.ts *.js.map` files from working directory.
+> Safely removes old/built `*.js *.d.ts *.js.map` files from working directory.
 
 ## Install
 

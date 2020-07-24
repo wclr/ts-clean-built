@@ -2,7 +2,7 @@
 
 > Safely removes old/built `*.js *.d.ts *.js.map` files from working directory.
 
-This is useful when for example you want to clean up working/output directory of old built (not actual) files, not removing actual existing output (i.e when `tsc --watch` is running).
+This is useful when for example you want to clean up working/output directory of old built (not actual) files not removing actual existing output (i.e when `tsc --watch` is running).
 
 ## Install
 

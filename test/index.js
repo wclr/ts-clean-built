@@ -21,11 +21,11 @@ describe('ts-clean-built', () => {
   beforeEach(() => {
     // console.log = () => {}
   })
-  describe('default - cleaning only near *.ts', () => {
+  describe('--built - cleaning only near *.ts', () => {
     before(() => {
       fs.removeSync('test/tmp')
       fs.copySync('test/fixture', 'test/tmp')
-      execSync('node index.js test/tmp', { stdio: 'inherit' })
+      execSync('node index.js --built test/tmp', { stdio: 'inherit' })
     })
 
     it('does not remove *.ts files', () => {

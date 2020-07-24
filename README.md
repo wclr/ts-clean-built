@@ -1,6 +1,6 @@
 # ts-clean-built
 
-> Safely removes built `*.js  *.d.ts *.js.map` files from working directory.
+> Safely removes built `*.js *.d.ts *.js.map` files from working directory.
 
 ## Install
 
@@ -24,7 +24,7 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 
 - `--all` - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option.
 
-- `--dot` - dot-folders excluded, to include use  flag.
+- `--dot` - dot-folders excluded, to include use flag.
 
 - `--exclude` - list of patterns to exclude from search, i.e. `--exclude **/my-folder/**` will exclude all files in all directories named `my-folder` in the tree.
 
@@ -36,8 +36,11 @@ ts-clean-built [--old|--all] [--exclude folder1 folder2] [dir]
 
 - `--quite` - will not output log messages.
 
-- `dir` - is '.' (cwd) by default
+- `--out` - root, where to search output files, equals to `dir` by default
 
+- `--dir` - root, where to search source (\*.ts) files, is `.` (cwd) by default
+
+- [dir] - last argument, the same as `--dir`
 
 ## Licence
 

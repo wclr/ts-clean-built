@@ -4,12 +4,14 @@ const globby = require('globby')
 const minimist = require('minimist')
 const path = require('path')
 const args = minimist(process.argv.slice(2), {
-  boolean: true,
-  string: ['exclude'],
+  string: ['exclude', 'out', 'dir'],
+  boolean: ['help', 'old', 'dry', 'all', 'allow-dts', 'files', 'quite', 'dot'],
 })
 
-const dir = path.resolve(args._[0] || '.')
+const dir = path.resolve(args.dir || args._[0] || '.')
+const out = args.out ? path.resolve(args.out) : dir
 
+const help = args.help
 const dot = args.dot
 const quite = args.quite
 const dry = args.dry
@@ -17,8 +19,26 @@ const allowDtd = args['allow-dts']
 const filesList = args['files']
 const prefix = args['prefix']
 
-if (dir) {
-  process.chdir(dir)
+if (help) {
+  const helpMsg = [
+    'Usage example:',
+    'ts-clean-built --old --dry --out out',
+    'Flags:',
+    '--old - will search `.d.ts` files and remove corresponding `.js, .js.map` if no `.ts/tsx` version exists.',
+    '--allow-dts - used with `--old`, will not remove `.d.ts` if no corresponding `.ts` or `.js` exists, allowing to have leave `.d.ts` files.',
+    '--all - will remove all found `.js, .d.ts, .js.map` files, **potentially dangerous** option.',
+    '--dot - dot-folders excluded, to include use  flag.',
+    '--exclude - list of patterns to exclude from search, i.e. `--exclude **/my-folder/**` will exclude all files in all directories named `my-folder` in the tree.',
+    '--dry - will not remove files, just show the list to going to delete.',
+    '--files - outputs list of files removed',
+    '--quite - will not output log messages.',
+    '--out - root, where to search output files, equals to `dir` by default',
+    '--dir - root, where to search source (*.ts) files, is `.` (cwd) by default',
+    '[dir] - last argument, the same as `--dir`',
+  ].join('\n')
+  console.log(helpMsg)
+
+  process.exit()
 }
 
 const excludeFolders = ['node_modules', 'bower_components', 'jspm_packages']
@@ -30,7 +50,7 @@ const log = (...args) =>
   !quite && console.log(...(prefix ? ['[ts-clean-built] '] : []), ...args)
 
 const remove = async (patterns, opts) => {
-  return await del(patterns, { ...opts, dryRun: dry })
+  return await del(patterns, { ...opts, dryRun: dry, cwd: out })
 }
 
 const tsPattern = ['**/*.ts', '**/*.tsx', '!**/*.d.ts'].concat(excludePatterns)
@@ -55,13 +75,13 @@ const run = async () => {
       )
     }
 
-    const tsFiles = await globby(tsPattern, { dot })
+    const tsFiles = await globby(tsPattern, { dot, cwd: dir })
     const actualDtsFilesMap = makeDtsMap(tsFiles, /\.tsx?$/)
 
-    const jsFiles = allowDtd ? await globby(jsPattern, { dot }) : []
+    const jsFiles = allowDtd ? await globby(jsPattern, { dot, cwd: out }) : []
     const notOrphanDtsFilesMap = makeDtsMap(jsFiles, /\.js?$/)
 
-    const dTsFiles = await globby(dtsPattern, { dot })
+    const dTsFiles = await globby(dtsPattern, { dot, cwd: out })
 
     const notActualDts = dTsFiles.filter(
       (dtsFile) => !actualDtsFilesMap[dtsFile]
@@ -77,7 +97,7 @@ const run = async () => {
     log('Removing old', '.js, .d.ts, .js.map')
     return remove(toRemove)
   } else {
-    const tsFiles = await globby(tsPattern)
+    const tsFiles = await globby(tsPattern, { cwd: dir })
 
     const toRemove = tsFiles
       .map((tsFile) => tsFile.replace(/\.tsx?$/, '{.js,.d.ts,.js.map}'))
